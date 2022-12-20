@@ -2,7 +2,6 @@ local changeText = game.ReplicatedStorage.ChangeText
 local roundSystem = {}
 local playersTeleportedToMap = false
 local playersTeleportedToLobby = false
-local dodgeBallModule = require(script.Parent.dodgeball)
 
 function roundSystem.intermission(intermissionTime)
 
@@ -16,7 +15,7 @@ function roundSystem.spawnDodgeBalls(roundTime)
     dodgeBall.Parent = workspace
     dodgeBall.Color = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255))
     dodgeBall.Size = Vector3.new(4, 4, 4)
-    dodgeBall.Material = Enum.Material.Ice
+    dodgeBall.Material = Enum.Material.SmoothPlastic
     dodgeBall.Shape = Enum.PartType.Ball
     dodgeBall.Position = Vector3.new(dodgeBallSpawn.Position.x, dodgeBallSpawn.Position.y + 10, dodgeBallSpawn.Position.z)
     dodgeBall:Clone()
@@ -62,7 +61,7 @@ function roundSystem.teleportPlayersToLobby()
     local playerList = game:GetService("Players"):GetPlayers()
     for i, player in pairs(playerList) do
         local playerModel = player.Character.Humanoid.RootPart
-        lobbySpawn = game.Workspace.SpawnLocation
+        local lobbySpawn = game.Workspace.SpawnLocation
         playerModel.Position = Vector3.new(lobbySpawn.Position.x, lobbySpawn.Position.y, lobbySpawn.Position.z)
     end
 end

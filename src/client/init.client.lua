@@ -3,7 +3,7 @@ local timerText = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui
 
 local function timerChanged(time, type)
 
-    timerText.Text = type .. ": " .. time .. " seconds left"
+    timerText.Text = type .. ": " .. time .. " Seconds Left"
 
 end
 
