@@ -11,11 +11,6 @@ end
 
 function roundSystem.round(roundTime)
 
-    local playerList = game:GetService("Players"):GetPlayers()
-    for i, player in pairs(playerList) do
-        
-    end
-
     roundTime.Value -= 1
     changeText:FireAllClients(roundTime.Value, "Time Left")
 
