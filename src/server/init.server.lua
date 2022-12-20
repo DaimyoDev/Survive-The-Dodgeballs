@@ -5,8 +5,9 @@ local mapSelected = false
 local teleportPlayers = false
 
 while true do
-    wait(1)
+    task.wait(1)
     if intermissionTimer.Value >= 0 then
+        
         roundSystem.intermission(intermissionTimer)
     end
 
@@ -21,11 +22,28 @@ while true do
     end
     
     if intermissionTimer.Value <= 0 and roundTimer.Value >= 0 then
+        roundSystem.spawnDodgeBalls(roundTimer)
         roundSystem.round(roundTimer)
     end
-    
 
-
-    --call function when round starts. Teleports players to randomly chosen map and starts the round timer plus the dodgeball spawner.
+    if intermissionTimer.Value <= 0 and roundTimer.Value <= 0 then
+        roundSystem.teleportPlayersToLobby()
+        if game.Workspace:FindFirstChild("Map 1") then
+            local map1 = game.Workspace:FindFirstChild("Map 1")
+            map1:Destroy()
+        end
+        if game.Workspace:FindFirstChild("Map 2") then
+            local map2 = game.Workspace:FindFirstChild("Map 2")
+            map2:Destroy()
+        end
+        if game.Workspace:FindFirstChild("Map 3") then
+            local map3 = game.Workspace:FindFirstChild("Map 3")
+            map3:Destroy()
+        end
+        intermissionTimer.Value = 15
+        roundTimer.Value = 120
+        mapSelected = false
+        teleportPlayers = false
+    end
     
 end
