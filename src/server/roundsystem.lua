@@ -1,8 +1,11 @@
-local roundsystem = {}
+local changeText = game.ReplicatedStorage.ChangeText 
 
-function roundsystem.intermission(intermissiontime)
-    
-    intermissiontime.Value -= 1
+local roundSystem = {}
+
+function roundSystem.intermission(intermissionTime)
+
+    intermissionTime.Value -= 1
+    changeText:FireAllClients(intermissionTime.Value, "Intermission")
 end
 
-return roundsystem
+return roundSystem

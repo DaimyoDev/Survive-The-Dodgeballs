@@ -1,9 +1,9 @@
-local intermissiontimer = game.ServerStorage["Intermission Timer"]
-local roundsystem = require(script.roundsystem)
+local intermissionTimer = game.ServerStorage["Intermission Timer"]
+local roundSystem = require(script.roundsystem)
 
 while true do
     wait(1)
-    roundsystem.intermission(intermissiontimer)
+    roundSystem.intermission(intermissionTimer)
 
     -- call intermission timer function
     
