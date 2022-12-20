@@ -2,6 +2,7 @@ local changeText = game.ReplicatedStorage.ChangeText
 local roundSystem = {}
 local playersTeleportedToMap = false
 local playersTeleportedToLobby = false
+local mapSelect = game.ReplicatedStorage.MapSelect
 
 function roundSystem.intermission(intermissionTime)
 
@@ -46,6 +47,7 @@ function roundSystem.selectRandomMap()
     selectedMap.Parent = game.Workspace
     playerSpawn = selectedMap["Player Spawn"]
     dodgeBallSpawn = selectedMap["Ball Spawn"]
+    mapSelect:FireAllClients(selectedMapIndex)
 end
 
 
@@ -61,8 +63,10 @@ function roundSystem.teleportPlayersToLobby()
     local playerList = game:GetService("Players"):GetPlayers()
     for i, player in pairs(playerList) do
         local playerModel = player.Character.Humanoid.RootPart
+        local player = player.Character.Humanoid
         local lobbySpawn = game.Workspace.SpawnLocation
         playerModel.Position = Vector3.new(lobbySpawn.Position.x, lobbySpawn.Position.y, lobbySpawn.Position.z)
+        player.Health = 100
     end
 end
 
