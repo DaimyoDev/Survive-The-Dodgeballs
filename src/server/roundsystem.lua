@@ -4,6 +4,14 @@ local playersTeleportedToMap = false
 local playersTeleportedToLobby = false
 local mapSelect = game.ReplicatedStorage.MapSelect
 
+function roundSystem.roundType()
+
+    local roundList = {"Fire", "Large", "Slow Players", "Fast", "No Jump"}
+    local selectedRoundIndex = math.random(1, #roundList)
+    selectedRound = roundList[selectedRoundIndex]
+    
+end
+
 function roundSystem.intermission(intermissionTime)
 
     intermissionTime.Value -= 1
@@ -15,14 +23,29 @@ function roundSystem.spawnDodgeBalls(roundTime)
     dodgeBall.Name = "dodgeball"
     dodgeBall.Parent = workspace
     dodgeBall.Color = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255))
-    dodgeBall.Size = Vector3.new(4, 4, 4)
+    if selectedRound == "Large" then
+        dodgeBall.Size = Vector3.new(10, 10, 10)
+    else
+        dodgeBall.Size = Vector3.new(4, 4, 4)
+    end
     dodgeBall.Material = Enum.Material.SmoothPlastic
     dodgeBall.Shape = Enum.PartType.Ball
     dodgeBall.Position = Vector3.new(dodgeBallSpawn.Position.x, dodgeBallSpawn.Position.y + 10, dodgeBallSpawn.Position.z)
+
+    if selectedRound == "Fire" then
+        local fire = Instance.new("Fire")
+        fire.Name = "fire"
+        fire.Parent = dodgeBall
+        fire.Heat = 10
+    end
     dodgeBall:Clone()
 
     dodgeBall.Touched:Connect(function(otherPart)
-        dodgeBall:ApplyImpulse(Vector3.new(math.random(-3000, 3000), 1500, math.random(-3000, 3000)))
+        if selectedRound == "Large" then
+            dodgeBall:ApplyImpulse(Vector3.new(math.random(-20000, 20000), 20000, math.random(-20000, 20000)))
+        else
+            dodgeBall:ApplyImpulse(Vector3.new(math.random(-3000, 3000), 1500, math.random(-3000, 3000)))
+        end
         if otherPart.Parent:FindFirstChild("Humanoid") then
             local humanoid = otherPart.Parent:FindFirstChild("Humanoid")
             humanoid:TakeDamage(2)
@@ -56,6 +79,17 @@ function roundSystem.teleportAndGetPlayers()
     for i, player in pairs(playerList) do
         local playerModel = player.Character.Humanoid.RootPart
         playerModel.Position = Vector3.new(playerSpawn.Position.x, playerSpawn.Position.y, playerSpawn.Position.z)
+        local playerHumanoid = player.Character.Humanoid
+        if selectedRound == "Slow" then
+            playerHumanoid.WalkSpeed -= 10
+        end
+        if selectedRound == "Fast" then
+            playerHumanoid.WalkSpeed += 10
+        end
+        if selectedRound == "No Jump" then
+            playerHumanoid.JumpHeight -= 7.2
+            playerHumanoid.JumpPower -= 50
+        end
     end
 end
 
@@ -63,10 +97,13 @@ function roundSystem.teleportPlayersToLobby()
     local playerList = game:GetService("Players"):GetPlayers()
     for i, player in pairs(playerList) do
         local playerModel = player.Character.Humanoid.RootPart
-        local player = player.Character.Humanoid
+        local playerHumanoid = player.Character.Humanoid
         local lobbySpawn = game.Workspace.SpawnLocation
         playerModel.Position = Vector3.new(lobbySpawn.Position.x, lobbySpawn.Position.y, lobbySpawn.Position.z)
-        player.Health = 100
+        playerHumanoid.Health = 100
+        playerHumanoid.WalkSpeed = 16
+        playerHumanoid.JumpHeight = 7.2
+        playerHumanoid.JumpPower = 50
     end
 end
 

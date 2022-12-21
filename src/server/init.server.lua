@@ -3,6 +3,7 @@ local roundTimer = game.ServerStorage["Round Timer"]
 local roundSystem = require(script.roundsystem)
 local mapSelected = false
 local teleportPlayers = false
+local roundType = false
 
 while true do
     task.wait(1)
@@ -13,6 +14,8 @@ while true do
 
     if intermissionTimer.Value <= 5 and intermissionTimer.Value >= 0 and not mapSelected then
         roundSystem.selectRandomMap()
+        roundSystem.roundType()
+        roundType = true
         mapSelected = true
     end
 
@@ -44,6 +47,7 @@ while true do
         roundTimer.Value = 120
         mapSelected = false
         teleportPlayers = false
+        roundType = false
     end
     
 end
