@@ -3,6 +3,8 @@ local timerText = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui
 local mapSelect = game.ReplicatedStorage.MapSelect
 local mapText = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("MapSelected").Frame.MapText
 local mapSelectUI = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("MapSelected")
+local mapSelectFrame = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("MapSelected").Frame
+mapSelectFrame.BackgroundTransparency = 1
 
 local function timerChanged(time, type)
 
@@ -10,6 +12,13 @@ local function timerChanged(time, type)
 
     if type == "Intermission" and time <= 5 then
         mapSelectUI.Enabled = true
+        
+        while mapSelectFrame.BackgroundTransparency >= 0 do
+            task.wait(0.1)
+            mapSelectFrame.BackgroundTransparency -= 0.1
+
+        end
+        
 
     else
         mapSelectUI.Enabled = false
