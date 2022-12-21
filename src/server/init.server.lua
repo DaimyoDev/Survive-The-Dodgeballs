@@ -4,6 +4,9 @@ local roundSystem = require(script.roundsystem)
 local mapSelected = false
 local teleportPlayers = false
 local roundType = false
+local leaderBoard = require(script.leaderboard)
+local players = game:GetService("Players")
+players.PlayerAdded:Connect(leaderBoard.leaderBoardSetup)
 
 while true do
     task.wait(1)
