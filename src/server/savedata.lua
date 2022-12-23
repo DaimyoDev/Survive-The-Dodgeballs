@@ -30,29 +30,20 @@ function saveData.saveData(player, playerPoints, playerGames)
 
 end
 
-function saveData.loadPoints(player)
-
-    return pointsData:GetAsync(player)
-
-end
-
-function saveData.loadGames(player)
-
-    return gamesData:GetAsync(player)
-
-end
-
-
 function saveData.loadData(player)
 
-    local successPoints, errorPoints = pcall(saveData.loadPoints(player))
+    local successPoints, errorPoints = pcall(function()
+        return pointsData:GetAsync(player)
+    end)
     if not successPoints then
         print(errorPoints)
     else
-        return successGames
+        return successPoints
     end
 
-    local successGames, errorGames = pcall(saveData.loadGames(player))
+    local successGames, errorGames = pcall(function()
+        return gamesData:GetAsync(player)
+    end)
     if not successGames then
         print(errorGames)
     else

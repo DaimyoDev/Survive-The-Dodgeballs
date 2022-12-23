@@ -6,7 +6,10 @@ local teleportPlayers = false
 local roundType = false
 local leaderBoard = require(script.leaderboard)
 local players = game:GetService("Players")
+local saveData = require(script.savedata)
 players.PlayerAdded:Connect(leaderBoard.leaderBoardSetup)
+players.PlayerAdded:Connect(saveData.loadData)
+
 
 --Main game loop
 while true do
