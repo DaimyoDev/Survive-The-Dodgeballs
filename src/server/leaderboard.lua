@@ -11,6 +11,11 @@ points.Name = "Points"
 points.Parent = leaderstats
 points.Value = 0
 
+local games = Instance.new("IntValue")
+games.Name = "Games"
+games.Parent = leaderstats
+games.Value = 0
+
 end
 
 return leaderBoard
