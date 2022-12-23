@@ -1,50 +1,37 @@
 local dataStoreService = game:GetService("DataStoreService")
 local pointsData = dataStoreService:GetDataStore("PlayerPoints")
 local gamesData = dataStoreService:GetDataStore("PlayerGames")
+local leaderBoard = require(script.Parent.leaderboard)
 
 local saveData = {}
 
 function saveData.saveData(player)
-
     local playerPoints = player.leaderstats.Points.Value
     local playerGames = player.leaderstats.Games.Value
-
     local successPoints, errorPoints = pcall(function()
-        pointsData:SetAsync(player, playerPoints)
+        pointsData:SetAsync(player.UserId, playerPoints)
     end)
-    if not successPoints then
-    print(errorPoints)
-    end
-
     local successGames, errorGames = pcall(function()
-        gamesData:SetAsync(player, playerGames)
+        gamesData:SetAsync(player.UserId, playerGames)
     end)
-    if not successGames then
-    print(errorGames)
-    end
-
 end
 
 function saveData.loadData(player)
-
     local successPoints, errorPoints = pcall(function()
-        return pointsData:GetAsync(player)
+        updatedPoints = pointsData:GetAsync(player.UserId)
     end)
     if not successPoints then
         print(errorPoints)
-    else
-        return successPoints
     end
-
     local successGames, errorGames = pcall(function()
-        return gamesData:GetAsync(player)
+        updatedGames = gamesData:GetAsync(player.UserId)
     end)
     if not successGames then
         print(errorGames)
-    else
-        return successGames
     end
-
+    if successGames and successPoints then
+        leaderBoard.updateLeaderBoard(player, updatedPoints, updatedGames)
+    end
 end
 
 
