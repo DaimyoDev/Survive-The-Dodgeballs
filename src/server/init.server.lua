@@ -9,6 +9,7 @@ local players = game:GetService("Players")
 local saveData = require(script.savedata)
 players.PlayerAdded:Connect(leaderBoard.leaderBoardSetup)
 players.PlayerAdded:Connect(saveData.loadData)
+players.PlayerRemoving:Connect(saveData.saveData)
 
 
 --Main game loop

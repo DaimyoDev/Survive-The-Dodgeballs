@@ -4,26 +4,21 @@ local gamesData = dataStoreService:GetDataStore("PlayerGames")
 
 local saveData = {}
 
-function saveData.savePoints(player, playerPoints)
+function saveData.saveData(player)
 
-pointsData:SetAsync(player, playerPoints)
+    local playerPoints = player.leaderstats.Points.Value
+    local playerGames = player.leaderstats.Games.Value
 
-end
-
-function saveData.saveGames(player, playerGames)
-
-    gamesData:SetAsync(player, playerGames)
-
-end
-
-function saveData.saveData(player, playerPoints, playerGames)
-
-    local successPoints, errorPoints = pcall(saveData.savePoints(player, playerPoints))
+    local successPoints, errorPoints = pcall(function()
+        pointsData:SetAsync(player, playerPoints)
+    end)
     if not successPoints then
     print(errorPoints)
     end
 
-    local successGames, errorGames = pcall(saveData.savePoints(player, playerGames))
+    local successGames, errorGames = pcall(function()
+        gamesData:SetAsync(player, playerGames)
+    end)
     if not successGames then
     print(errorGames)
     end
