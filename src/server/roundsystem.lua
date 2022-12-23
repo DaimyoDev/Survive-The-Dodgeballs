@@ -6,7 +6,7 @@ local mapSelect = game.ReplicatedStorage.MapSelect
 
 function roundSystem.roundType()
 
-    local roundList = {"Fire", "Large", "Slow Players", "Fast", "No Jump"}
+    local roundList = {"Fire", "Large", "Slow", "Fast", "No Jump"}
     local selectedRoundIndex = math.random(1, #roundList)
     selectedRound = roundList[selectedRoundIndex]
     
