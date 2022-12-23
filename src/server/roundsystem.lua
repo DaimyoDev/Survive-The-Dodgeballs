@@ -3,6 +3,7 @@ local roundSystem = {}
 local playersTeleportedToMap = false
 local playersTeleportedToLobby = false
 local mapSelect = game.ReplicatedStorage.MapSelect
+local CollectionService = game:GetService("CollectionService")
 
 function roundSystem.roundType()
 
@@ -90,6 +91,8 @@ function roundSystem.teleportAndGetPlayers()
             playerHumanoid.JumpHeight -= 7.2
             playerHumanoid.JumpPower -= 50
         end
+        CollectionService:AddTag(player, "Alive")
+        player.leaderstats.Games.Value += 1
     end
 end
 
@@ -104,6 +107,10 @@ function roundSystem.teleportPlayersToLobby()
         playerHumanoid.WalkSpeed = 16
         playerHumanoid.JumpHeight = 7.2
         playerHumanoid.JumpPower = 50
+
+        if CollectionService:HasTag(player, "Alive") then
+            player.leaderstats.Points.Value += 100
+        end
     end
 end
 

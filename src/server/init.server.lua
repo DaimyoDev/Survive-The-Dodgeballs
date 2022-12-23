@@ -8,6 +8,7 @@ local leaderBoard = require(script.leaderboard)
 local players = game:GetService("Players")
 players.PlayerAdded:Connect(leaderBoard.leaderBoardSetup)
 
+--Main game loop
 while true do
     task.wait(1)
     if intermissionTimer.Value >= 0 then
