@@ -9,7 +9,6 @@ local dlcClient = require(script.dlcclient)
 local playerDied = game.ReplicatedStorage.PlayerDied
 local roundSelected = game.ReplicatedStorage.RoundSelected
 local humanoid = player.Character:WaitForChild("Humanoid")
-local playerDead = false
 
 local function setNewHumanoid(newHumanoid)
     humanoid = newHumanoid
@@ -34,7 +33,6 @@ roundSelected.OnClientEvent:Connect(roundSystemClient.roundSelected)
 
 local function onPlayerDeath()
     playerDied:FireServer()
-    playerDead = true
 end
 
 while true do
