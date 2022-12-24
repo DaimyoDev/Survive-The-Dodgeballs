@@ -10,18 +10,6 @@ local playerDied = game.ReplicatedStorage.PlayerDied
 local roundSelected = game.ReplicatedStorage.RoundSelected
 local humanoid = player.Character:WaitForChild("Humanoid")
 
-local function setNewHumanoid(newHumanoid)
-    humanoid = newHumanoid
-    print("New humanoid")
-end
-
-player.CharacterAdded:Connect(function()
-    print("Character added")
-    local newHumanoid = player.Character:WaitForChild("Humanoid")
-    setNewHumanoid(newHumanoid)
-end)
-
-
 mapSelectFrame.BackgroundTransparency = 1
 
 shopButton.Activated:Connect(dlcClient.openShopMenu)
@@ -30,14 +18,3 @@ closeShop.Activated:Connect(dlcClient.closeShopMenu)
 changeText.OnClientEvent:Connect(roundSystemClient.timerChanged)
 mapSelect.OnClientEvent:Connect(roundSystemClient.mapSelected)
 roundSelected.OnClientEvent:Connect(roundSystemClient.roundSelected)
-
-local function onPlayerDeath()
-    playerDied:FireServer()
-end
-
-while true do
-    task.wait(1)
-    if humanoid ~= nil then
-        humanoid.Died:Connect(onPlayerDeath)
-    end
-end
