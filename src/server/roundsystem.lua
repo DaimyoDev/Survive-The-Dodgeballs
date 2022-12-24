@@ -5,6 +5,13 @@ local playersTeleportedToLobby = false
 local mapSelect = game.ReplicatedStorage.MapSelect
 local CollectionService = game:GetService("CollectionService")
 local roundSelected = game.ReplicatedStorage.RoundSelected
+local BadgeService = game:GetService("BadgeService")
+
+local TEN_GAMES_BADGE_ID = 2130048300
+local ONE_HUNDRED_GAMES_BADGE_ID = 2130048302
+local ONE_THOUSAND_POINTS_BADGE_ID = 2130048323
+local FIVE_THOUSAND_POINTS_BADGE_ID = 2130048325
+
 
 function roundSystem.roundType()
 
@@ -66,6 +73,30 @@ function roundSystem.round(roundTime)
     for i, player in pairs(playerList) do
         if CollectionService:HasTag(player, "Alive") then
             player.leaderstats.Points.Value += 5
+            if player.leaderstats.Points.Value >= 1000 then
+                local success, badgeInfo = pcall(function()
+                    return BadgeService:GetBadgeInfoAsync(ONE_THOUSAND_POINTS_BADGE_ID)
+                end)
+                if success then
+                    if badgeInfo.Enabled then
+                        local awardSuccess, result = pcall(function()
+                            return BadgeService:AwardBadge(player.UserId, ONE_THOUSAND_POINTS_BADGE_ID)
+                        end)
+                    end
+                end
+            end
+            if player.leaderstats.Points.Value >= 5000 then
+                local success, badgeInfo = pcall(function()
+                    return BadgeService:GetBadgeInfoAsync(FIVE_THOUSAND_POINTS_BADGE_ID)
+                end)
+                if success then
+                    if badgeInfo.Enabled then
+                        local awardSuccess, result = pcall(function()
+                            return BadgeService:AwardBadge(player.UserId, FIVE_THOUSAND_POINTS_BADGE_ID)
+                        end)
+                    end
+                end
+            end
         end
     end
 end
@@ -101,6 +132,30 @@ function roundSystem.teleportAndGetPlayers()
         end
         CollectionService:AddTag(player, "Alive")
         player.leaderstats.Games.Value += 1
+        if player.leaderstats.Games.Value >= 10 then
+            local success, badgeInfo = pcall(function()
+                return BadgeService:GetBadgeInfoAsync(TEN_GAMES_BADGE_ID)
+            end)
+            if success then
+                if badgeInfo.Enabled then
+                    local awardSuccess, result = pcall(function()
+                        return BadgeService:AwardBadge(player.UserId, TEN_GAMES_BADGE_ID)
+                    end)
+                end
+            end
+        end
+        if player.leaderstats.Games.Value >= 100 then
+            local success, badgeInfo = pcall(function()
+                return BadgeService:GetBadgeInfoAsync(ONE_HUNDRED_GAMES_BADGE_ID)
+            end)
+            if success then
+                if badgeInfo.Enabled then
+                    local awardSuccess, result = pcall(function()
+                        return BadgeService:AwardBadge(player.UserId, ONE_HUNDRED_GAMES_BADGE_ID)
+                    end)
+                end
+            end
+        end
     end
 end
 
@@ -121,12 +176,6 @@ function roundSystem.teleportPlayersToLobby()
         end
         roundSelected:FireAllClients("None")
     end
-end
-
-function roundSystem.playerDied(player)
-
-
-
 end
 
 return roundSystem
