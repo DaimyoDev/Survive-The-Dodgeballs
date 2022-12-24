@@ -7,8 +7,21 @@ local mapSelectFrame = game:GetService("Players").LocalPlayer:WaitForChild("Play
 local roundSystemClient = require(script.roundsystemclient)
 local dlcClient = require(script.dlcclient)
 local playerDied = game.ReplicatedStorage.PlayerDied
-local humanoid = player.Character.Humanoid
 local roundSelected = game.ReplicatedStorage.RoundSelected
+local humanoid = player.Character:WaitForChild("Humanoid")
+local playerDead = false
+
+local function setNewHumanoid(newHumanoid)
+    humanoid = newHumanoid
+    print("New humanoid")
+end
+
+player.CharacterAdded:Connect(function()
+    print("Character added")
+    local newHumanoid = player.Character:WaitForChild("Humanoid")
+    setNewHumanoid(newHumanoid)
+end)
+
 
 mapSelectFrame.BackgroundTransparency = 1
 
@@ -20,9 +33,13 @@ mapSelect.OnClientEvent:Connect(roundSystemClient.mapSelected)
 roundSelected.OnClientEvent:Connect(roundSystemClient.roundSelected)
 
 local function onPlayerDeath()
-
     playerDied:FireServer()
-
+    playerDead = true
 end
 
-humanoid.Died:Connect(onPlayerDeath)
+while true do
+    task.wait(1)
+    if humanoid ~= nil then
+        humanoid.Died:Connect(onPlayerDeath)
+    end
+end

@@ -165,13 +165,13 @@ function roundSystem.teleportPlayersToLobby()
         local playerModel = player.Character.Humanoid.RootPart
         local playerHumanoid = player.Character.Humanoid
         local lobbySpawn = game.Workspace.SpawnLocation
-        playerModel.Position = Vector3.new(lobbySpawn.Position.x, lobbySpawn.Position.y, lobbySpawn.Position.z)
         playerHumanoid.Health = 100
         playerHumanoid.WalkSpeed = 16
         playerHumanoid.JumpHeight = 7.2
         playerHumanoid.JumpPower = 50
 
         if CollectionService:HasTag(player, "Alive") then
+            playerModel.Position = Vector3.new(lobbySpawn.Position.x, lobbySpawn.Position.y, lobbySpawn.Position.z)
             CollectionService:RemoveTag(player, "Alive")
         end
         roundSelected:FireAllClients("None")
