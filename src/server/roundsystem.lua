@@ -78,7 +78,7 @@ function roundSystem.round(roundTime)
                     return BadgeService:GetBadgeInfoAsync(ONE_THOUSAND_POINTS_BADGE_ID)
                 end)
                 if success then
-                    if badgeInfo.Enabled then
+                    if badgeInfo.IsEnabled then
                         local awardSuccess, result = pcall(function()
                             return BadgeService:AwardBadge(player.UserId, ONE_THOUSAND_POINTS_BADGE_ID)
                         end)
@@ -90,7 +90,7 @@ function roundSystem.round(roundTime)
                     return BadgeService:GetBadgeInfoAsync(FIVE_THOUSAND_POINTS_BADGE_ID)
                 end)
                 if success then
-                    if badgeInfo.Enabled then
+                    if badgeInfo.IsEnabled then
                         local awardSuccess, result = pcall(function()
                             return BadgeService:AwardBadge(player.UserId, FIVE_THOUSAND_POINTS_BADGE_ID)
                         end)
@@ -137,7 +137,7 @@ function roundSystem.teleportAndGetPlayers()
                 return BadgeService:GetBadgeInfoAsync(TEN_GAMES_BADGE_ID)
             end)
             if success then
-                if badgeInfo.Enabled then
+                if badgeInfo.IsEnabled then
                     local awardSuccess, result = pcall(function()
                         return BadgeService:AwardBadge(player.UserId, TEN_GAMES_BADGE_ID)
                     end)
@@ -149,7 +149,7 @@ function roundSystem.teleportAndGetPlayers()
                 return BadgeService:GetBadgeInfoAsync(ONE_HUNDRED_GAMES_BADGE_ID)
             end)
             if success then
-                if badgeInfo.Enabled then
+                if badgeInfo.IsEnabled then
                     local awardSuccess, result = pcall(function()
                         return BadgeService:AwardBadge(player.UserId, ONE_HUNDRED_GAMES_BADGE_ID)
                     end)
