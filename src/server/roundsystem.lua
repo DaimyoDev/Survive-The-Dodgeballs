@@ -19,7 +19,7 @@ local FIVE_THOUSAND_POINTS_BADGE_ID = 2130048325
 
 function roundSystem.roundType()
 
-    local roundList = {"Slow", "Fast", "No Jump"}
+    local roundList = {"Slow", "Fast", "No Jump", "Normal", "Fire", "Large"}
     local selectedRoundIndex = math.random(1, #roundList)
     selectedRound = roundList[selectedRoundIndex]
     roundSelected:FireAllClients(selectedRound)
