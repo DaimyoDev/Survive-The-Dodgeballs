@@ -6,6 +6,10 @@ local mapSelect = game.ReplicatedStorage.MapSelect
 local CollectionService = game:GetService("CollectionService")
 local roundSelected = game.ReplicatedStorage.RoundSelected
 local BadgeService = game:GetService("BadgeService")
+local healthGP = game.ReplicatedStorage.HealthGP
+local speedGP = game.ReplicatedStorage.SpeedGP
+local jumpGP = game.ReplicatedStorage.JumpGP
+local MarketplaceService = game:GetService("MarketplaceService")
 
 local TEN_GAMES_BADGE_ID = 2130048300
 local ONE_HUNDRED_GAMES_BADGE_ID = 2130048302
@@ -15,7 +19,7 @@ local FIVE_THOUSAND_POINTS_BADGE_ID = 2130048325
 
 function roundSystem.roundType()
 
-    local roundList = {"Fire", "Large", "Slow", "Fast", "No Jump", "Normal"}
+    local roundList = {"Slow", "Fast", "No Jump"}
     local selectedRoundIndex = math.random(1, #roundList)
     selectedRound = roundList[selectedRoundIndex]
     roundSelected:FireAllClients(selectedRound)
@@ -121,14 +125,27 @@ function roundSystem.teleportAndGetPlayers()
         playerModel.Position = Vector3.new(playerSpawn.Position.x, playerSpawn.Position.y, playerSpawn.Position.z)
         local playerHumanoid = player.Character.Humanoid
         if selectedRound == "Slow" then
-            playerHumanoid.WalkSpeed -= 10
+            if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512366) then
+                playerHumanoid.WalkSpeed = 14
+            else
+                playerHumanoid.WalkSpeed = playerHumanoid.WalkSpeed - 10
+            end
         end
         if selectedRound == "Fast" then
-            playerHumanoid.WalkSpeed += 10
+            if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512366) then
+                playerHumanoid.WalkSpeed = 34
+            else
+                playerHumanoid.WalkSpeed += 10
+            end
         end
         if selectedRound == "No Jump" then
-            playerHumanoid.JumpHeight -= 7.2
-            playerHumanoid.JumpPower -= 50
+            if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113506638) then
+                playerHumanoid.JumpHeight = 5.8
+                playerHumanoid.JumpPower = 20
+            else
+                playerHumanoid.JumpHeight -= 7.2
+                playerHumanoid.JumpPower -= 50
+            end
         end
         CollectionService:AddTag(player, "Alive")
         player.leaderstats.Games.Value += 1
@@ -165,10 +182,23 @@ function roundSystem.teleportPlayersToLobby()
         local playerModel = player.Character.Humanoid.RootPart
         local playerHumanoid = player.Character.Humanoid
         local lobbySpawn = game.Workspace.SpawnLocation
-        playerHumanoid.Health = 100
-        playerHumanoid.WalkSpeed = 16
-        playerHumanoid.JumpHeight = 7.2
-        playerHumanoid.JumpPower = 50
+
+        if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512622) then
+            healthGP:FireClient(player)
+        else
+            playerHumanoid.Health = 100
+        end
+        if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512366) then
+            speedGP:FireClient(player)
+        else
+            playerHumanoid.WalkSpeed = 16
+        end
+        if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113506638) then
+            jumpGP:FireClient(player)
+        else
+            playerHumanoid.JumpHeight = 7.2
+            playerHumanoid.JumpPower = 50
+        end
 
         if CollectionService:HasTag(player, "Alive") then
             playerModel.Position = Vector3.new(lobbySpawn.Position.x, lobbySpawn.Position.y, lobbySpawn.Position.z)
