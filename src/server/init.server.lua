@@ -7,10 +7,17 @@ local roundType = false
 local leaderBoard = require(script.leaderboard)
 local players = game:GetService("Players")
 local saveData = require(script.savedata)
+local playerDied = game.ReplicatedStorage.PlayerDied
+local CollectionService = game:GetService("CollectionService")
 players.PlayerAdded:Connect(leaderBoard.leaderBoardSetup)
 players.PlayerAdded:Connect(saveData.loadData)
 players.PlayerRemoving:Connect(saveData.saveData)
 
+playerDied.OnServerEvent:Connect(function(player)
+    if CollectionService:HasTag(player, "Alive") then
+        CollectionService:RemoveTag(player, "Alive")
+    end
+end)
 
 --Main game loop
 while true do

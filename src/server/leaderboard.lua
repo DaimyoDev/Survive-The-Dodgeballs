@@ -25,7 +25,6 @@ function leaderBoard.updateLeaderBoard(currentPlayer, newPoints, newGames)
         if player.UserId == currentPlayer.UserId then
             player.leaderstats.Points.Value = newPoints
             player.leaderstats.Games.Value = newGames
-            print(player.UserId, currentPlayer.UserId)
         end
     end
 end

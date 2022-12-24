@@ -49,7 +49,7 @@ function roundSystem.spawnDodgeBalls(roundTime)
         end
         if otherPart.Parent:FindFirstChild("Humanoid") then
             local humanoid = otherPart.Parent:FindFirstChild("Humanoid")
-            humanoid:TakeDamage(2)
+            humanoid:TakeDamage(5)
         end
 
     end)
@@ -60,6 +60,12 @@ function roundSystem.round(roundTime)
 
     roundTime.Value -= 1
     changeText:FireAllClients(roundTime.Value, "Time Left")
+    local playerList = game:GetService("Players"):GetPlayers()
+    for i, player in pairs(playerList) do
+        if CollectionService:HasTag(player, "Alive") then
+            player.leaderstats.Points.Value += 5
+        end
+    end
 end
 
 function roundSystem.selectRandomMap()
@@ -109,9 +115,15 @@ function roundSystem.teleportPlayersToLobby()
         playerHumanoid.JumpPower = 50
 
         if CollectionService:HasTag(player, "Alive") then
-            player.leaderstats.Points.Value += 100
+            CollectionService:RemoveTag(player, "Alive")
         end
     end
+end
+
+function roundSystem.playerDied(player)
+
+
+
 end
 
 return roundSystem
