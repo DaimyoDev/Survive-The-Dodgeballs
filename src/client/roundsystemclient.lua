@@ -2,6 +2,8 @@ local mapSelectUI = game:GetService("Players").LocalPlayer:WaitForChild("PlayerG
 local mapText = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("MapSelected").Frame.MapText
 local timerText = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("PlayerUI").TimerText
 local mapSelectFrame = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("MapSelected").Frame
+local roundSelectUI = game:GetService("Players").LocalPlayer:WaitForChild("PlayerGui"):WaitForChild("RoundType")
+local roundSelectText = roundSelectUI.RoundSelect
 
 local roundSystemClient = {}
 
@@ -41,6 +43,20 @@ function roundSystemClient.mapSelected(map)
 
         mapText.Text = "Map 3 has been selected!"
 
+    end
+
+end
+
+function roundSystemClient.roundSelected(roundType)
+
+    roundSelectText.Text = "GameMode: " .. roundType
+
+    if roundType == "Normal" then
+        roundSelectText.Text = "GameMode: Normal"
+    end
+
+    if roundType == "None" then
+        roundSelectText.Text = "GameMode: Not Selected"
     end
 
 end

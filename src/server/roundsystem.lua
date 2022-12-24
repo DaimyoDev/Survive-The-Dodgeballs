@@ -4,12 +4,14 @@ local playersTeleportedToMap = false
 local playersTeleportedToLobby = false
 local mapSelect = game.ReplicatedStorage.MapSelect
 local CollectionService = game:GetService("CollectionService")
+local roundSelected = game.ReplicatedStorage.RoundSelected
 
 function roundSystem.roundType()
 
-    local roundList = {"Fire", "Large", "Slow", "Fast", "No Jump"}
+    local roundList = {"Fire", "Large", "Slow", "Fast", "No Jump", "Normal"}
     local selectedRoundIndex = math.random(1, #roundList)
     selectedRound = roundList[selectedRoundIndex]
+    roundSelected:FireAllClients(selectedRound)
     
 end
 
@@ -117,6 +119,7 @@ function roundSystem.teleportPlayersToLobby()
         if CollectionService:HasTag(player, "Alive") then
             CollectionService:RemoveTag(player, "Alive")
         end
+        roundSelected:FireAllClients("None")
     end
 end
 

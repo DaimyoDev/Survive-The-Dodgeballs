@@ -8,6 +8,7 @@ local roundSystemClient = require(script.roundsystemclient)
 local dlcClient = require(script.dlcclient)
 local playerDied = game.ReplicatedStorage.PlayerDied
 local humanoid = player.Character.Humanoid
+local roundSelected = game.ReplicatedStorage.RoundSelected
 
 mapSelectFrame.BackgroundTransparency = 1
 
@@ -16,6 +17,7 @@ closeShop.Activated:Connect(dlcClient.closeShopMenu)
 
 changeText.OnClientEvent:Connect(roundSystemClient.timerChanged)
 mapSelect.OnClientEvent:Connect(roundSystemClient.mapSelected)
+roundSelected.OnClientEvent:Connect(roundSystemClient.roundSelected)
 
 local function onPlayerDeath()
 
