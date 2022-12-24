@@ -15,5 +15,23 @@ function dlcClient.closeShopMenu()
 
 end
 
+function dlcClient.purchaseHealth()
+
+    purchaseDlc:FireServer(113512622)
+
+end
+
+function dlcClient.purchaseSpeed()
+
+    purchaseDlc:FireServer(113512366)
+
+end
+
+function dlcClient.purchaseJump()
+
+    purchaseDlc:FireServer(113506638)
+
+end
+
 return dlcClient
 

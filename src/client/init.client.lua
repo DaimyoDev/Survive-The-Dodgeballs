@@ -9,6 +9,10 @@ local dlcClient = require(script.dlcclient)
 local playerDied = game.ReplicatedStorage.PlayerDied
 local roundSelected = game.ReplicatedStorage.RoundSelected
 local humanoid = player.Character:WaitForChild("Humanoid")
+local shopUI = player:WaitForChild("PlayerGui"):WaitForChild("ShopUI")
+local extraHealthButton = shopUI.Shop.ExtraHealth.TextButton
+local speedBoostButton = shopUI.Shop.SpeedBoost.TextButton
+local jumpBoostButton = shopUI.Shop.JumpBoost.TextButton
 
 mapSelectFrame.BackgroundTransparency = 1
 
@@ -18,3 +22,7 @@ closeShop.Activated:Connect(dlcClient.closeShopMenu)
 changeText.OnClientEvent:Connect(roundSystemClient.timerChanged)
 mapSelect.OnClientEvent:Connect(roundSystemClient.mapSelected)
 roundSelected.OnClientEvent:Connect(roundSystemClient.roundSelected)
+
+extraHealthButton.Activated:Connect(dlcClient.purchaseHealth)
+speedBoostButton.Activated:Connect(dlcClient.purchaseSpeed)
+jumpBoostButton.Activated:Connect(dlcClient.purchaseJump)
