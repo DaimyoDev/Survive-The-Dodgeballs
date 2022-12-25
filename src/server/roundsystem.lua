@@ -12,11 +12,8 @@ local jumpGP = game.ReplicatedStorage.JumpGP
 local MarketplaceService = game:GetService("MarketplaceService")
 local Lighting = game:GetService("Lighting")
 local antiCheat = require(script.Parent.anticheat)
-
-local TEN_GAMES_BADGE_ID = 2130048300
-local ONE_HUNDRED_GAMES_BADGE_ID = 2130048302
-local ONE_THOUSAND_POINTS_BADGE_ID = 2130048323
-local FIVE_THOUSAND_POINTS_BADGE_ID = 2130048325
+local gamePasses = require(script.Parent.gamePasses)
+local badges = require(script.Parent.badges)
 
 
 function roundSystem.roundType()
@@ -136,28 +133,28 @@ function roundSystem.teleportAndGetPlayers()
         antiCheat.runAntiCheat(player, selectedRound)
         
         if selectedRound == "Slow" then
-            if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512366) then
+            if MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePasses.speedDLC) then
                 playerHumanoid.WalkSpeed = 14
             else
                 playerHumanoid.WalkSpeed = playerHumanoid.WalkSpeed - 10
             end
         end
         if selectedRound == "Fast" then
-            if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512366) then
+            if MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePasses.speedDLC) then
                 playerHumanoid.WalkSpeed = 34
             else
                 playerHumanoid.WalkSpeed += 10
             end
         end
         if selectedRound == "Super Fast" then
-            if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512366) then
+            if MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePasses.speedDLC) then
                 playerHumanoid.WalkSpeed = 44
             else
                 playerHumanoid.WalkSpeed += 20
             end
         end
         if selectedRound == "No Jump" then
-            if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113506638) then
+            if MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePasses.jumpDLC) then
                 playerHumanoid.JumpHeight = 5.8
                 playerHumanoid.JumpPower = 20
             else
@@ -169,24 +166,24 @@ function roundSystem.teleportAndGetPlayers()
         player.leaderstats.Games.Value += 1
         if player.leaderstats.Games.Value >= 10 then
             local success, badgeInfo = pcall(function()
-                return BadgeService:GetBadgeInfoAsync(TEN_GAMES_BADGE_ID)
+                return BadgeService:GetBadgeInfoAsync(badges.TEN_GAMES_BADGE_ID)
             end)
             if success then
                 if badgeInfo.IsEnabled then
                     local awardSuccess, result = pcall(function()
-                        return BadgeService:AwardBadge(player.UserId, TEN_GAMES_BADGE_ID)
+                        return BadgeService:AwardBadge(player.UserId, badges.TEN_GAMES_BADGE_ID)
                     end)
                 end
             end
         end
         if player.leaderstats.Games.Value >= 100 then
             local success, badgeInfo = pcall(function()
-                return BadgeService:GetBadgeInfoAsync(ONE_HUNDRED_GAMES_BADGE_ID)
+                return BadgeService:GetBadgeInfoAsync(badges.ONE_HUNDRED_GAMES_BADGE_ID)
             end)
             if success then
                 if badgeInfo.IsEnabled then
                     local awardSuccess, result = pcall(function()
-                        return BadgeService:AwardBadge(player.UserId, ONE_HUNDRED_GAMES_BADGE_ID)
+                        return BadgeService:AwardBadge(player.UserId, badges.ONE_HUNDRED_GAMES_BADGE_ID)
                     end)
                 end
             end
@@ -204,41 +201,41 @@ function roundSystem.teleportPlayersToLobby()
 
         if player.leaderstats.Points.Value >= 1000 then
             local success, badgeInfo = pcall(function()
-                return BadgeService:GetBadgeInfoAsync(ONE_THOUSAND_POINTS_BADGE_ID)
+                return BadgeService:GetBadgeInfoAsync(badges.ONE_THOUSAND_POINTS_BADGE_ID)
             end)
             if success then
                 if badgeInfo.IsEnabled then
                     local awardSuccess, result = pcall(function()
-                        return BadgeService:AwardBadge(player.UserId, ONE_THOUSAND_POINTS_BADGE_ID)
+                        return BadgeService:AwardBadge(player.UserId, badges.ONE_THOUSAND_POINTS_BADGE_ID)
                     end)
                 end
             end
         end
         if player.leaderstats.Points.Value >= 5000 then
             local success, badgeInfo = pcall(function()
-                return BadgeService:GetBadgeInfoAsync(FIVE_THOUSAND_POINTS_BADGE_ID)
+                return BadgeService:GetBadgeInfoAsync(badges.FIVE_THOUSAND_POINTS_BADGE_ID)
             end)
             if success then
                 if badgeInfo.IsEnabled then
                     local awardSuccess, result = pcall(function()
-                        return BadgeService:AwardBadge(player.UserId, FIVE_THOUSAND_POINTS_BADGE_ID)
+                        return BadgeService:AwardBadge(player.UserId, badges.FIVE_THOUSAND_POINTS_BADGE_ID)
                     end)
                 end
             end
         end
 
-        if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512622) then
+        if MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePasses.healthDLC) then
             playerHumanoid.MaxHealth = 200
             playerHumanoid.Health = playerHumanoid.MaxHealth
         else
             playerHumanoid.Health = 100
         end
-        if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512366) then
+        if MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePasses.speedDLC) then
             playerHumanoid.WalkSpeed = 24
         else
             playerHumanoid.WalkSpeed = 16
         end
-        if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113506638) then
+        if MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePasses.jumpDLC) then
             playerHumanoid.JumpHeight = 12
             playerHumanoid.JumpPower = 70
         else

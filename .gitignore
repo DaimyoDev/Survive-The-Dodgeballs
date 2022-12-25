@@ -5,3 +5,4 @@
 /*.rbxlx.lock
 /*.rbxl.lock
 src/server/gamepasses.lua
+src/server/badges.lua
