@@ -15,9 +15,9 @@ local antiCheat = require(script.Parent.anticheat)
 local gamePasses = require(script.Parent.gamePasses)
 local badges = require(script.Parent.badges)
 
-
+--"Slow", "Fast", "No Jump", "Super Fast", "Night", "Large", "Fire", "Super Large"
 function roundSystem.roundType()
-    local roundList = {"Large", "Fire", "Large", "Slow", "Fast", "No Jump", "Super Fast", "Night", "Small", "Super Large"}
+    local roundList = {"Super Large"}
     local selectedRoundIndex = math.random(1, #roundList)
     selectedRound = roundList[selectedRoundIndex]
     roundSelected:FireAllClients(selectedRound)
@@ -54,27 +54,15 @@ function roundSystem.spawnDodgeBalls(roundTime)
         local fire = Instance.new("Fire")
         fire.Name = "fire"
         fire.Parent = dodgeBall
-        fire.Heat = 10
+        fire.Heat = 50
+        fire.Size = 20
     end
     dodgeBall:Clone()
 
 
     dodgeBall.Touched:Connect(function(otherPart)
         local directionX, directionZ = math.random(1, 2), math.random(1, 2)
-        if selectedRound == "Small" then
-            if directionX == 1 and directionZ == 1 then
-                dodgeBall:ApplyImpulse(Vector3.new(500, 500, 500))
-            end
-            if directionX == 1 and directionZ == 2 then
-                dodgeBall:ApplyImpulse(Vector3.new(500, 500, -500))
-            end
-            if directionX == 2 and directionZ == 1 then
-                dodgeBall:ApplyImpulse(Vector3.new(-500, 500, 500))
-            end
-            if directionX == 2 and directionZ == 2 then
-                dodgeBall:ApplyImpulse(Vector3.new(-500, 500, -500))
-            end
-        else
+        if selectedRound ~= "Small" and selectedRound ~= "Large" and selectedRound ~= "Super Large" then
             if directionX == 1 and directionZ == 1 then
                 dodgeBall:ApplyImpulse(Vector3.new(2000, 1000, 2000))
             end
@@ -86,6 +74,20 @@ function roundSystem.spawnDodgeBalls(roundTime)
             end
             if directionX == 2 and directionZ == 2 then
                 dodgeBall:ApplyImpulse(Vector3.new(-2000, 1000, -2000))
+            end
+        end
+        if selectedRound == "Small" then
+            if directionX == 1 and directionZ == 1 then
+                dodgeBall:ApplyImpulse(Vector3.new(250, 100, 250))
+            end
+            if directionX == 1 and directionZ == 2 then
+                dodgeBall:ApplyImpulse(Vector3.new(250, 100, -250))
+            end
+            if directionX == 2 and directionZ == 1 then
+                dodgeBall:ApplyImpulse(Vector3.new(-250, 100, 250))
+            end
+            if directionX == 2 and directionZ == 2 then
+                dodgeBall:ApplyImpulse(Vector3.new(-250, 100, -250))
             end
         end
         if selectedRound == "Large" then
@@ -101,27 +103,26 @@ function roundSystem.spawnDodgeBalls(roundTime)
             if directionX == 2 and directionZ == 2 then
                 dodgeBall:ApplyImpulse(Vector3.new(-20000, 20000, -20000))
             end
-        else
+        end
+        if selectedRound == "Super Large" then
             if directionX == 1 and directionZ == 1 then
-                dodgeBall:ApplyImpulse(Vector3.new(2000, 1000, 2000))
+                dodgeBall:ApplyImpulse(Vector3.new(100000, 130000, 100000))
             end
             if directionX == 1 and directionZ == 2 then
-                dodgeBall:ApplyImpulse(Vector3.new(2000, 1000, -2000))
+                dodgeBall:ApplyImpulse(Vector3.new(100000, 130000, -100000))
             end
             if directionX == 2 and directionZ == 1 then
-                dodgeBall:ApplyImpulse(Vector3.new(-2000, 1000, 2000))
+                dodgeBall:ApplyImpulse(Vector3.new(-100000, 130000, 100000))
             end
             if directionX == 2 and directionZ == 2 then
-                dodgeBall:ApplyImpulse(Vector3.new(-2000, 1000, -2000))
+                dodgeBall:ApplyImpulse(Vector3.new(-100000, 130000, -100000))
             end
         end
         if otherPart.Parent:FindFirstChild("Humanoid") then
             local humanoid = otherPart.Parent:FindFirstChild("Humanoid")
             humanoid:TakeDamage(3)
         end
-
     end)
-    
 end
 
 function roundSystem.round(roundTime)
