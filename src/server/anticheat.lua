@@ -6,7 +6,6 @@ local jumpGP = game.ReplicatedStorage.JumpGP
 
 function antiCheat.runAntiCheat(player, selectedRound)
     local playerHumanoid = player.Character.Humanoid
-    print(playerHumanoid.WalkSpeed)
     if playerHumanoid.MaxHealth > 100 and not MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512622) then
         player:Kick("You have been kicked for exploiting")
     end
