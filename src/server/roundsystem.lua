@@ -17,7 +17,7 @@ local badges = require(script.Parent.badges)
 
 
 function roundSystem.roundType()
-    local roundList = {"Large", "Fire", "Large", "Slow", "Fast", "No Jump", "Super Fast", "Night"}
+    local roundList = {"Large", "Fire", "Large", "Slow", "Fast", "No Jump", "Super Fast", "Night", "Small", "Super Large"}
     local selectedRoundIndex = math.random(1, #roundList)
     selectedRound = roundList[selectedRoundIndex]
     roundSelected:FireAllClients(selectedRound)
@@ -37,9 +37,15 @@ function roundSystem.spawnDodgeBalls(roundTime)
     dodgeBall.Color = Color3.fromRGB(math.random(0, 255), math.random(0, 255), math.random(0, 255))
     if selectedRound == "Large" then
         dodgeBall.Size = Vector3.new(10, 10, 10)
+    elseif selectedRound == "Small" then
+        dodgeBall.Size = Vector3.new(2, 2, 2)
+    elseif selectedRound == "Super Large" then
+        dodgeBall.Size = Vector3.new(20, 20, 20)
     else
         dodgeBall.Size = Vector3.new(4, 4, 4)
     end
+
+    
     dodgeBall.Material = Enum.Material.SmoothPlastic
     dodgeBall.Shape = Enum.PartType.Ball
     dodgeBall.Position = Vector3.new(dodgeBallSpawn.Position.x, dodgeBallSpawn.Position.y + 10, dodgeBallSpawn.Position.z)
@@ -55,6 +61,33 @@ function roundSystem.spawnDodgeBalls(roundTime)
 
     dodgeBall.Touched:Connect(function(otherPart)
         local directionX, directionZ = math.random(1, 2), math.random(1, 2)
+        if selectedRound == "Small" then
+            if directionX == 1 and directionZ == 1 then
+                dodgeBall:ApplyImpulse(Vector3.new(500, 500, 500))
+            end
+            if directionX == 1 and directionZ == 2 then
+                dodgeBall:ApplyImpulse(Vector3.new(500, 500, -500))
+            end
+            if directionX == 2 and directionZ == 1 then
+                dodgeBall:ApplyImpulse(Vector3.new(-500, 500, 500))
+            end
+            if directionX == 2 and directionZ == 2 then
+                dodgeBall:ApplyImpulse(Vector3.new(-500, 500, -500))
+            end
+        else
+            if directionX == 1 and directionZ == 1 then
+                dodgeBall:ApplyImpulse(Vector3.new(2000, 1000, 2000))
+            end
+            if directionX == 1 and directionZ == 2 then
+                dodgeBall:ApplyImpulse(Vector3.new(2000, 1000, -2000))
+            end
+            if directionX == 2 and directionZ == 1 then
+                dodgeBall:ApplyImpulse(Vector3.new(-2000, 1000, 2000))
+            end
+            if directionX == 2 and directionZ == 2 then
+                dodgeBall:ApplyImpulse(Vector3.new(-2000, 1000, -2000))
+            end
+        end
         if selectedRound == "Large" then
             if directionX == 1 and directionZ == 1 then
                 dodgeBall:ApplyImpulse(Vector3.new(20000, 20000, 20000))
@@ -84,7 +117,7 @@ function roundSystem.spawnDodgeBalls(roundTime)
         end
         if otherPart.Parent:FindFirstChild("Humanoid") then
             local humanoid = otherPart.Parent:FindFirstChild("Humanoid")
-            humanoid:TakeDamage(1)
+            humanoid:TakeDamage(3)
         end
 
     end)

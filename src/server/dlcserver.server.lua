@@ -64,21 +64,29 @@ purchaseDlc.OnServerEvent:Connect(function(player, buttonType)
 end)
 
 healthGP.OnServerEvent:Connect(function(player, humanoid)
-    if MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePasses.healthDLC) then
-        humanoid.MaxHealth = 200
-        humanoid.Health = humanoid.MaxHealth
+    if humanoid.Name == "Humanoid" then
+        if MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePasses.healthDLC) then
+            humanoid.MaxHealth = 200
+            humanoid.Health = humanoid.MaxHealth
+        end
     end
 end)
 
 speedGP.OnServerEvent:Connect(function(player, humanoid)
-    if MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePasses.speedDLC) then
-        humanoid.WalkSpeed = 24
+    if humanoid.Name == "Humanoid" then
+        if MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePasses.speedDLC) then
+            humanoid.WalkSpeed = 24
+        end
     end
 end)
 
+
+
 jumpGP.OnServerEvent:Connect(function(player, humanoid)
-    if MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePasses.speedDLC) then
-        humanoid.JumpHeight = 12
-        humanoid.JumpPower = 70
+    if humanoid.Name == "Humanoid" then
+        if MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePasses.speedDLC) then
+            humanoid.JumpHeight = 12
+            humanoid.JumpPower = 70
+        end
     end
 end)
