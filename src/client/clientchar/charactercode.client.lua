@@ -19,8 +19,8 @@ if character then
     humanoid.Died:Connect(onPlayerDeath)
 
     healthGP.OnClientEvent:Connect(function()
-        humanoid.MaxHealth = 150
-        humanoid.Health = 150
+        humanoid.MaxHealth = 200
+        humanoid.Health = 200
     end)
 
     jumpGP.OnClientEvent:Connect(function()

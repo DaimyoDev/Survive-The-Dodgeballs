@@ -86,7 +86,7 @@ function roundSystem.spawnDodgeBalls(roundTime)
         end
         if otherPart.Parent:FindFirstChild("Humanoid") then
             local humanoid = otherPart.Parent:FindFirstChild("Humanoid")
-            humanoid:TakeDamage(5)
+            humanoid:TakeDamage(1)
         end
 
     end)
@@ -224,6 +224,7 @@ function roundSystem.teleportPlayersToLobby()
         end
 
         if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512622) then
+            playerHumanoid.MaxHealth = 200
             playerHumanoid.Health = playerHumanoid.MaxHealth
         else
             playerHumanoid.Health = 100

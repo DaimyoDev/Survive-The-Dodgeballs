@@ -17,14 +17,14 @@ Players.PlayerAdded:Connect(function(player)
     end
 end)
 
-MarketplaceService.PromptGamePassPurchaseFinished:Connect(function(player, gamePassId)
-    if gamePassId == 113512622 then
+MarketplaceService.PromptGamePassPurchaseFinished:Connect(function(player, gamePassId, wasPurchased)
+    if gamePassId == 113512622 and wasPurchased then
         healthGP:FireClient(player)
     end
-    if gamePassId == 113512366 then
+    if gamePassId == 113512366 and wasPurchased then
         speedGP:FireClient(player)
     end
-    if gamePassId == 113506638 then
+    if gamePassId == 113506638 and wasPurchased then
         jumpGP:FireClient(player)
     end
 end)
