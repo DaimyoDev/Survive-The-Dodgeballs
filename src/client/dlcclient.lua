@@ -17,19 +17,19 @@ end
 
 function dlcClient.purchaseHealth()
 
-    purchaseDlc:FireServer(113512622)
+    purchaseDlc:FireServer("Health")
 
 end
 
 function dlcClient.purchaseSpeed()
 
-    purchaseDlc:FireServer(113512366)
+    purchaseDlc:FireServer("Speed")
 
 end
 
 function dlcClient.purchaseJump()
 
-    purchaseDlc:FireServer(113506638)
+    purchaseDlc:FireServer("Jump")
 
 end
 

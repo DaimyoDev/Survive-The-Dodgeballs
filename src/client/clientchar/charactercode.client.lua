@@ -12,24 +12,10 @@ if character then
         playerDied:FireServer()
     end
 
-    healthGP:FireServer()
-    speedGP:FireServer()
-    jumpGP:FireServer()
+    healthGP:FireServer(humanoid)
+    speedGP:FireServer(humanoid)
+    jumpGP:FireServer(humanoid)
 
     humanoid.Died:Connect(onPlayerDeath)
-
-    healthGP.OnClientEvent:Connect(function()
-        humanoid.MaxHealth = 200
-        humanoid.Health = 200
-    end)
-
-    jumpGP.OnClientEvent:Connect(function()
-        humanoid.JumpHeight = 12
-        humanoid.JumpPower = 70
-    end)
-
-    speedGP.OnClientEvent:Connect(function()
-        humanoid.WalkSpeed = 24
-    end)
 
 end

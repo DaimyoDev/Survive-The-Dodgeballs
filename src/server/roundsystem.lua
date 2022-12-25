@@ -11,6 +11,7 @@ local speedGP = game.ReplicatedStorage.SpeedGP
 local jumpGP = game.ReplicatedStorage.JumpGP
 local MarketplaceService = game:GetService("MarketplaceService")
 local Lighting = game:GetService("Lighting")
+local antiCheat = require(script.Parent.anticheat)
 
 local TEN_GAMES_BADGE_ID = 2130048300
 local ONE_HUNDRED_GAMES_BADGE_ID = 2130048302
@@ -131,6 +132,9 @@ function roundSystem.teleportAndGetPlayers()
         local playerModel = player.Character.Humanoid.RootPart
         playerModel.Position = Vector3.new(playerSpawn.Position.x, playerSpawn.Position.y, playerSpawn.Position.z)
         local playerHumanoid = player.Character.Humanoid
+        
+        antiCheat.runAntiCheat(player, selectedRound)
+        
         if selectedRound == "Slow" then
             if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512366) then
                 playerHumanoid.WalkSpeed = 14
@@ -230,12 +234,13 @@ function roundSystem.teleportPlayersToLobby()
             playerHumanoid.Health = 100
         end
         if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512366) then
-            speedGP:FireClient(player)
+            playerHumanoid.WalkSpeed = 24
         else
             playerHumanoid.WalkSpeed = 16
         end
         if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113506638) then
-            jumpGP:FireClient(player)
+            playerHumanoid.JumpHeight = 12
+            playerHumanoid.JumpPower = 70
         else
             playerHumanoid.JumpHeight = 7.2
             playerHumanoid.JumpPower = 50
