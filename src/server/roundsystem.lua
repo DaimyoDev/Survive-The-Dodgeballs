@@ -10,6 +10,7 @@ local healthGP = game.ReplicatedStorage.HealthGP
 local speedGP = game.ReplicatedStorage.SpeedGP
 local jumpGP = game.ReplicatedStorage.JumpGP
 local MarketplaceService = game:GetService("MarketplaceService")
+local Lighting = game:GetService("Lighting")
 
 local TEN_GAMES_BADGE_ID = 2130048300
 local ONE_HUNDRED_GAMES_BADGE_ID = 2130048302
@@ -18,7 +19,7 @@ local FIVE_THOUSAND_POINTS_BADGE_ID = 2130048325
 
 
 function roundSystem.roundType()
-    local roundList = {"Large", "Fire", "Large", "Slow", "Fast", "No Jump"}
+    local roundList = {"Large", "Fire", "Large", "Slow", "Fast", "No Jump", "Super Fast", "Night"}
     local selectedRoundIndex = math.random(1, #roundList)
     selectedRound = roundList[selectedRoundIndex]
     roundSelected:FireAllClients(selectedRound)
@@ -119,6 +120,13 @@ end
 
 function roundSystem.teleportAndGetPlayers()
     local playerList = game:GetService("Players"):GetPlayers()
+
+    if selectedRound == "Night" then
+        Lighting:SetMinutesAfterMidnight(0)
+
+    end
+
+    --Fetch players
     for i, player in pairs(playerList) do
         local playerModel = player.Character.Humanoid.RootPart
         playerModel.Position = Vector3.new(playerSpawn.Position.x, playerSpawn.Position.y, playerSpawn.Position.z)
@@ -135,6 +143,13 @@ function roundSystem.teleportAndGetPlayers()
                 playerHumanoid.WalkSpeed = 34
             else
                 playerHumanoid.WalkSpeed += 10
+            end
+        end
+        if selectedRound == "Super Fast" then
+            if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512366) then
+                playerHumanoid.WalkSpeed = 44
+            else
+                playerHumanoid.WalkSpeed += 20
             end
         end
         if selectedRound == "No Jump" then
@@ -181,6 +196,7 @@ function roundSystem.teleportPlayersToLobby()
         local playerModel = player.Character.Humanoid.RootPart
         local playerHumanoid = player.Character.Humanoid
         local lobbySpawn = game.Workspace.SpawnLocation
+        Lighting:SetMinutesAfterMidnight(720)
 
         if player.leaderstats.Points.Value >= 1000 then
             local success, badgeInfo = pcall(function()
@@ -209,7 +225,6 @@ function roundSystem.teleportPlayersToLobby()
 
         if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512622) then
             playerHumanoid.Health = playerHumanoid.MaxHealth
-            print(playerHumanoid.Health)
         else
             playerHumanoid.Health = 100
         end
