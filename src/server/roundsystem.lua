@@ -184,7 +184,7 @@ function roundSystem.teleportPlayersToLobby()
         local lobbySpawn = game.Workspace.SpawnLocation
 
         if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512622) then
-            healthGP:FireClient(player)
+            playerHumanoid.Health = 150
         else
             playerHumanoid.Health = 100
         end

@@ -15,14 +15,24 @@ Players.PlayerAdded:Connect(function(player)
     if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113506638) then
         jumpGP:FireClient(player)
     end
+end)
 
+MarketplaceService.PromptGamePassPurchaseFinished:Connect(function(player, gamePassId)
+    if gamePassId == 113512622 then
+        healthGP:FireClient(player)
+    end
+    if gamePassId == 113512366 then
+        speedGP:FireClient(player)
+    end
+    if gamePassId == 113506638 then
+        jumpGP:FireClient(player)
+    end
 end)
 
 healthGP.OnServerEvent:Connect(function(player)
     if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512622) then
         healthGP:FireClient(player)
     end
-
 end)
 
 speedGP.OnServerEvent:Connect(function(player)
