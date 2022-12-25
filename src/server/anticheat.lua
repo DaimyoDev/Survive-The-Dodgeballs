@@ -44,10 +44,10 @@ function antiCheat.runAntiCheat(player, selectedRound)
             player:Kick("You have been kicked for exploiting")
         end
     end
-    if playerHumanoid.JumpHeight > 7.2 and not MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePasses.jumpDLC) then
+    if playerHumanoid.JumpHeight > 7.3 and not MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePasses.healthDLC) then
         player:Kick("You have been kicked for exploiting")
     end
-    if playerHumanoid.JumpPower > 50 and not MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePasses.jumpDLC) then
+    if playerHumanoid.JumpPower > 51 and not MarketplaceService:UserOwnsGamePassAsync(player.UserId, gamePasses.healthDLC) then
         player:Kick("You have been kicked for exploiting")
     end
 
