@@ -18,8 +18,7 @@ local FIVE_THOUSAND_POINTS_BADGE_ID = 2130048325
 
 
 function roundSystem.roundType()
-
-    local roundList = {"Slow", "Fast", "No Jump", "Normal", "Fire", "Large"}
+    local roundList = {"Large", "Fire", "Large", "Slow", "Fast", "No Jump"}
     local selectedRoundIndex = math.random(1, #roundList)
     selectedRound = roundList[selectedRoundIndex]
     roundSelected:FireAllClients(selectedRound)
@@ -54,11 +53,35 @@ function roundSystem.spawnDodgeBalls(roundTime)
     end
     dodgeBall:Clone()
 
+
     dodgeBall.Touched:Connect(function(otherPart)
+        local directionX, directionZ = math.random(1, 2), math.random(1, 2)
         if selectedRound == "Large" then
-            dodgeBall:ApplyImpulse(Vector3.new(math.random(-20000, 20000), 20000, math.random(-20000, 20000)))
+            if directionX == 1 and directionZ == 1 then
+                dodgeBall:ApplyImpulse(Vector3.new(20000, 20000, 20000))
+            end
+            if directionX == 1 and directionZ == 2 then
+                dodgeBall:ApplyImpulse(Vector3.new(20000, 20000, -20000))
+            end
+            if directionX == 2 and directionZ == 1 then
+                dodgeBall:ApplyImpulse(Vector3.new(-20000, 20000, 20000))
+            end
+            if directionX == 2 and directionZ == 2 then
+                dodgeBall:ApplyImpulse(Vector3.new(-20000, 20000, -20000))
+            end
         else
-            dodgeBall:ApplyImpulse(Vector3.new(math.random(-3000, 3000), 1500, math.random(-3000, 3000)))
+            if directionX == 1 and directionZ == 1 then
+                dodgeBall:ApplyImpulse(Vector3.new(2000, 1000, 2000))
+            end
+            if directionX == 1 and directionZ == 2 then
+                dodgeBall:ApplyImpulse(Vector3.new(2000, 1000, -2000))
+            end
+            if directionX == 2 and directionZ == 1 then
+                dodgeBall:ApplyImpulse(Vector3.new(-2000, 1000, 2000))
+            end
+            if directionX == 2 and directionZ == 2 then
+                dodgeBall:ApplyImpulse(Vector3.new(-2000, 1000, -2000))
+            end
         end
         if otherPart.Parent:FindFirstChild("Humanoid") then
             local humanoid = otherPart.Parent:FindFirstChild("Humanoid")
@@ -77,30 +100,6 @@ function roundSystem.round(roundTime)
     for i, player in pairs(playerList) do
         if CollectionService:HasTag(player, "Alive") then
             player.leaderstats.Points.Value += 5
-            if player.leaderstats.Points.Value >= 1000 then
-                local success, badgeInfo = pcall(function()
-                    return BadgeService:GetBadgeInfoAsync(ONE_THOUSAND_POINTS_BADGE_ID)
-                end)
-                if success then
-                    if badgeInfo.IsEnabled then
-                        local awardSuccess, result = pcall(function()
-                            return BadgeService:AwardBadge(player.UserId, ONE_THOUSAND_POINTS_BADGE_ID)
-                        end)
-                    end
-                end
-            end
-            if player.leaderstats.Points.Value >= 5000 then
-                local success, badgeInfo = pcall(function()
-                    return BadgeService:GetBadgeInfoAsync(FIVE_THOUSAND_POINTS_BADGE_ID)
-                end)
-                if success then
-                    if badgeInfo.IsEnabled then
-                        local awardSuccess, result = pcall(function()
-                            return BadgeService:AwardBadge(player.UserId, FIVE_THOUSAND_POINTS_BADGE_ID)
-                        end)
-                    end
-                end
-            end
         end
     end
 end
@@ -183,8 +182,34 @@ function roundSystem.teleportPlayersToLobby()
         local playerHumanoid = player.Character.Humanoid
         local lobbySpawn = game.Workspace.SpawnLocation
 
+        if player.leaderstats.Points.Value >= 1000 then
+            local success, badgeInfo = pcall(function()
+                return BadgeService:GetBadgeInfoAsync(ONE_THOUSAND_POINTS_BADGE_ID)
+            end)
+            if success then
+                if badgeInfo.IsEnabled then
+                    local awardSuccess, result = pcall(function()
+                        return BadgeService:AwardBadge(player.UserId, ONE_THOUSAND_POINTS_BADGE_ID)
+                    end)
+                end
+            end
+        end
+        if player.leaderstats.Points.Value >= 5000 then
+            local success, badgeInfo = pcall(function()
+                return BadgeService:GetBadgeInfoAsync(FIVE_THOUSAND_POINTS_BADGE_ID)
+            end)
+            if success then
+                if badgeInfo.IsEnabled then
+                    local awardSuccess, result = pcall(function()
+                        return BadgeService:AwardBadge(player.UserId, FIVE_THOUSAND_POINTS_BADGE_ID)
+                    end)
+                end
+            end
+        end
+
         if MarketplaceService:UserOwnsGamePassAsync(player.UserId, 113512622) then
-            playerHumanoid.Health = 150
+            playerHumanoid.Health = playerHumanoid.MaxHealth
+            print(playerHumanoid.Health)
         else
             playerHumanoid.Health = 100
         end
