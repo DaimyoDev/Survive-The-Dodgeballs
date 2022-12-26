@@ -15,9 +15,8 @@ local antiCheat = require(script.Parent.anticheat)
 local gamePasses = require(script.Parent.gamePasses)
 local badges = require(script.Parent.badges)
 
---"Slow", "Fast", "No Jump", "Super Fast", "Night", "Large", "Fire", "Super Large"
 function roundSystem.roundType()
-    local roundList = {"Super Large"}
+    local roundList = {"Slow", "Fast", "Small", "No Jump", "Super Fast", "Night", "Large", "Fire", "Super Large"}
     local selectedRoundIndex = math.random(1, #roundList)
     selectedRound = roundList[selectedRoundIndex]
     roundSelected:FireAllClients(selectedRound)
@@ -61,6 +60,9 @@ function roundSystem.spawnDodgeBalls(roundTime)
 
 
     dodgeBall.Touched:Connect(function(otherPart)
+        if otherPart.Name == "Wall" then
+            return
+        end
         local directionX, directionZ = math.random(1, 2), math.random(1, 2)
         if selectedRound ~= "Small" and selectedRound ~= "Large" and selectedRound ~= "Super Large" then
             if directionX == 1 and directionZ == 1 then
@@ -118,9 +120,12 @@ function roundSystem.spawnDodgeBalls(roundTime)
                 dodgeBall:ApplyImpulse(Vector3.new(-100000, 130000, -100000))
             end
         end
+        if otherPart.Parent:FindFirstChild("Humanoid") == nil then
+            return
+        end
         if otherPart.Parent:FindFirstChild("Humanoid") then
             local humanoid = otherPart.Parent:FindFirstChild("Humanoid")
-            humanoid:TakeDamage(3)
+            humanoid:TakeDamage(30)
         end
     end)
 end
